@@ -1,3 +1,10 @@
+### Laravel CSV Download/Process Jobs
+
+The project is based on the below boilerplate.
+
+
+### BoilerPlate README
+
 ## Laravel 8  & TailwindCSS 2 skeleton
 
 Whether you’re watching my tutorials or you are interested in cloning this repo where TailwindCSS is already implemented in an empty Laravel 8 project!
