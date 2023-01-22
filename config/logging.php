@@ -37,7 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single', 'stderr'],
             'ignore_exceptions' => false,
         ],
 
@@ -81,6 +81,15 @@ return [
                 'stream' => 'php://stderr',
             ],
         ],
+        'stdout' => [
+            'driver' => 'monolog',
+            // 'level' => env('LOG_LEVEL', 'info'),
+            // 'handler' => StreamHandler::class,
+            // 'formatter' => env('LOG_STDERR_FORMATTER'),
+            'with' => [
+                'stream' => 'php://stdout',
+            ],
+        ],
 
         'syslog' => [
             'driver' => 'syslog',
@@ -100,6 +109,13 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+        // 'supervisorLog' => [
+        //     'driver' => 'single',
+        //     'name' => 'supervisor-log',
+        //     // ath should be same as stdout_logfile in supervisord.conf
+        //     'path' => storage_path('logs/laravel.log'),
+        //     'locking' => false
+        // ],
     ],
 
 ];
