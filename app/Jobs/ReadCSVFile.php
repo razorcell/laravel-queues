@@ -42,7 +42,7 @@ class ReadCSVFile implements ShouldQueue
         // Read the fie line by line
         foreach (MyTools::get_all_lines($file_handle) as $line) {
             $count += 1;
-            if ($count % 1000 == 0) echo $count . ". " . $line;
+            if ($count % 1000 == 0) echo "Line[" . $count . "]-->" . $line;
         }
 
         fclose($file_handle);

@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Jobs\CalculateDataJob;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\DownloadCSVFileJob;
 
