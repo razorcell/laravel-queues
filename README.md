@@ -1,6 +1,9 @@
 ## Laravel CSV Download/Process Jobs
 
-The project is based on the below boilerplate.
+The project is based on the below boilerplate. You click the button and a job is sent to download a CSV file using streams and dispatches a second job to read that file as a stream of chunks.
+
+<img width="1199" alt="image" src="https://user-images.githubusercontent.com/1534598/214048048-8c04fc28-b575-4f0a-9f95-8c4963bfa7ed.png">
+
 
 <img width="1032" alt="image" src="https://user-images.githubusercontent.com/1534598/214045582-777b43d1-de8b-45b7-b62e-7eb51054ffac.png">
 
