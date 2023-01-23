@@ -1,13 +1,13 @@
-### Laravel CSV Download/Process Jobs
+## Laravel CSV Download/Process Jobs
 
 The project is based on the below boilerplate.
 
 <img width="1032" alt="image" src="https://user-images.githubusercontent.com/1534598/214045582-777b43d1-de8b-45b7-b62e-7eb51054ffac.png">
 
 
-### BoilerPlate README
+## Originl boilerplate
 
-## Laravel 8  & TailwindCSS 2 skeleton
+# Laravel 8  & TailwindCSS 2 skeleton
 
 Whether you’re watching my tutorials or you are interested in cloning this repo where TailwindCSS is already implemented in an empty Laravel 8 project!
 
