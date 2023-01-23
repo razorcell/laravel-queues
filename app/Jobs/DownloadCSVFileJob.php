@@ -74,7 +74,7 @@ class DownloadCSVFileJob implements ShouldQueue
         
         // Read from the stream chunks of 500 KBytes, and write to file
         while (!$body->eof()) {
-            $byte =  $body->read(500 * 1000 * 1024);
+            $byte =  $body->read(500 * 1024);
             Storage::append($this->fileName, $byte);
 
             Log::debug(substr($byte, -20));
