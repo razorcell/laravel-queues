@@ -3,15 +3,12 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Storage;
 use App\MyTools;
 
@@ -41,12 +38,13 @@ class DownloadCSVFileJob implements ShouldQueue
      */
     public function handle()
     {
-        $this->downUsingLaravel();
+        $this->downUsingLaravelHttp();
     }
 
-    function downUsingLaravel()
+    function downUsingLaravelHttp()
     {
-        Log::debug('Sending request');
+        $fullPath = storage_path('app') . DIRECTORY_SEPARATOR . $this->fileName;
+
         $response = Http::withOptions([
             [
                 'debug' => true,
@@ -69,58 +67,24 @@ class DownloadCSVFileJob implements ShouldQueue
             ]
         ])->get($this->url);
 
-        $fullPath = storage_path('app') . DIRECTORY_SEPARATOR . $this->fileName;
+        // Get Guzzle response stream handle
         $body = $response->toPsrResponse()->getBody();
+
         Log::debug('Stream size = ' . $body->getSize());
+        
+        // Read from the stream chunks of 500 KBytes, and write to file
         while (!$body->eof()) {
-            $byte =  $body->read(500 * 1024);
+            $byte =  $body->read(500 * 1000 * 1024);
+            Storage::append($this->fileName, $byte);
+
             Log::debug(substr($byte, -20));
             Log::debug('memory ' . MyTools::getMemoryUsage());
-            Storage::append($this->fileName, $byte);
         }
 
+        // Close the stream handle
         $body->close();
 
+        // Dispatch Reading the CSV Job
         ReadCSVFile::dispatch($fullPath);
     }
-    // function downUsingGuzzle() // Not working
-    // {
-    //     $client = new Client();
-    //     $response = $client->request('GET', $this->url, [
-    //         'stream' => true,
-    //         'headers' => [
-    //             'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/109.0',
-    //             'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-    //             'Accept-Language' => 'en-US,en;q=0.5',
-    //             'Accept-Encoding' => 'gzip, deflate, br',
-    //             'Connection' => 'keep-alive',
-    //             'Upgrade-Insecure-Requests' => '1',
-    //             'Sec-Fetch-Dest' => 'document',
-    //             'Sec-Fetch-Mode' => 'navigate',
-    //             'Sec-Fetch-Site' => 'none',
-    //             'Sec-Fetch-User' => '?1',
-    //             'Sec-GPC' => '1',
-    //             'Pragma' => 'no-cache',
-    //             'Cache-Control' => 'no-cache',
-    //         ]
-    //     ]);
-
-    //     $body = $response->getBody();
-    //     $i = 1;
-    //     Log::debug('Stream size = ' . $body->getSize());
-    //     while (!$body->eof()) {
-    //         $byte =  $body->read(2000 * 1024);
-    //         Log::debug($i . '=' . substr($byte, -20));
-    //         Log::debug('memory ' . MyTools::getMemoryUsage());
-    //         $i++;
-    //     }
-
-    //     Log::debug('after while loop ------------------------->>>>>>END');
-    //     $body->close();
-
-    //     $code = $response->getStatusCode(); // 200
-    //     $reason = $response->getReasonPhrase(); // OK
-
-    //     Log::debug('code & reason', [$code, $reason]);
-    // }
 }

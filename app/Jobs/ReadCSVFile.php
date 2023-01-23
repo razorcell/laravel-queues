@@ -34,9 +34,12 @@ class ReadCSVFile implements ShouldQueue
     public function handle()
     {
         Log::info("Reading file: " . $this->fullPath);
+
+        // Get a pointer to an output stream for the CSV file
         $file_handle = fopen($this->fullPath, 'r');
 
         $count = 0;
+        // Read the fie line by line
         foreach (MyTools::get_all_lines($file_handle) as $line) {
             $count += 1;
             if ($count % 1000 == 0) echo $count . ". " . $line;
