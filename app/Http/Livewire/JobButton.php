@@ -25,7 +25,7 @@ class JobButton extends Component
 
         Log::info("dispatching downloadFileJob");
         // $downloadFileJob::dispatch();
-        // DownloadCSVFileJob::dispatch('myData.csv', 'https://raw.githubusercontent.com/amitkaps/multidim/master/data/pincode.csv');
-        DownloadCSVFileJob::dispatch('veryLarge.csv', 'https://github.com/Schlumberger/hackathon/raw/master/backend/dataset/data-large.csv');
+        DownloadCSVFileJob::dispatch('myData.csv', 'https://raw.githubusercontent.com/amitkaps/multidim/master/data/pincode.csv');
+        // DownloadCSVFileJob::dispatch('veryLarge.csv', 'https://github.com/Schlumberger/hackathon/raw/master/backend/dataset/data-large.csv');
     }
 }

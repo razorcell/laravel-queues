@@ -3,12 +3,12 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use App\MyTools;
 
 class ReadCSVFile implements ShouldQueue
 {
@@ -37,13 +37,13 @@ class ReadCSVFile implements ShouldQueue
         $file_handle = fopen($this->fullPath, 'r');
 
         $count = 0;
-        foreach (get_all_lines($file_handle) as $line) {
+        foreach (MyTools::get_all_lines($file_handle) as $line) {
             $count += 1;
             if ($count % 1000 == 0) echo $count . ". " . $line;
         }
 
         fclose($file_handle);
 
-        Log::info("Finished Reading file: " . $this->fullPath . " : MaxRAM = " . getMemoryUsage());
+        Log::info("Finished Reading file: " . $this->fullPath . " : MaxRAM = " . MyTools::getMemoryUsage());
     }
 }
