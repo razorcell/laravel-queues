@@ -5,7 +5,7 @@ The project is based on the below boilerplate.
 <img width="1032" alt="image" src="https://user-images.githubusercontent.com/1534598/214045582-777b43d1-de8b-45b7-b62e-7eb51054ffac.png">
 
 
-## Originl boilerplate
+## Original boilerplate
 
 # Laravel 8  & TailwindCSS 2 skeleton
 
